@@ -2464,7 +2464,7 @@
     "icon": "mrjau01.app.png",
     "version": "0.07",
     "description": "My first test app",
-    "tags": "Watch,GPX",
+    "tags": "Watch,GPS",
     "allow_emulator": true,
     "storage": [
       { "name": "mrjau01.app.js","url": "mrjau01.app.js"},
