@@ -158,7 +158,6 @@ const fontSize = 3;  // "6x8"
 const passivColor = 0x3186 /*grey*/;
 const activeColor = 0xF800 /*red*/;
 const whiteColor = 0xFFFF /*Wite*/;
-// draw the Word Clock
 function drawWordClock() {
   clearDevice();
   myBTN2 = setWatch(startAppMenue, BTN2, { repeat: false, edge: "falling" });
@@ -227,7 +226,7 @@ function drawWordClock() {
   g.setColor(whiteColor);
   g.clearRect(0, 215, 240, 240);
   g.drawString(time, 120, 215);
-}
+} // draw the Word Clock
 /* End of Draw World Clock */
 
 /* Main Section */
@@ -238,8 +237,10 @@ function startMenueItem() {
   console.log("Start Menue Item (" + menueIndex + ")");
   switch (menueIndex) {
     case 0:
+      startMyGPXApp();
       break;
     case 1:
+      startMyHeartApp();
       break;
     case 2:
       startMyTimerApp();

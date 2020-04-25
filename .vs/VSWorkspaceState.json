@@ -2,11 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\apps",
-    "\\apps\\gpsinfo",
-    "\\apps\\gpsrec",
+    "\\apps\\mrjau01",
     "\\apps\\setting",
     "\\apps\\wclock"
   ],
-  "SelectedNode": "\\apps\\wclock\\clock-word.js",
+  "SelectedNode": "\\apps\\mrjau01\\mrjau01.app.js",
   "PreviewInSolutionExplorer": false
 }
