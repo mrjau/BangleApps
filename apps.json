@@ -2456,12 +2456,13 @@
       {"name":"pong.app.js","url":"app.js"},
       {"name":"pong.img","url":"app-icon.js","evaluate":true}
     ]
-  },  {
+  },  
+ {
     "id": "mrjau01",
     "name": "TestingApp",
     "shortName": "TestApp",
     "icon": "mrjau01.app.png",
-    "version": "0.04",
+    "version": "0.07",
     "description": "My first base app",
     "tags": "Watch,GPX",
     "allow_emulator": true,
