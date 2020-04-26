@@ -3,7 +3,7 @@
     "name": "TestingApp",
     "shortName": "TestApp",
     "icon": "mrjau01.app.png",
-    "version": "0.07",
+    "version": "0.09",
     "description": "My first test app",
     "tags": "Watch,GPS",
     "allow_emulator": true,

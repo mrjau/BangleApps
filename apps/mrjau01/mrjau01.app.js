@@ -1,48 +1,122 @@
-﻿// place your const, vars, functions or classes here
-const version = "0.07";
-var menueMode = false;
+﻿const version = "0.09";
+var menueIndex = 0;
+var menueValues = ['GPX App', 'Heart Rate', 'Timer App', 'Watch', 'Stop App'];
+var progIndex = 3; // Watch
+var progValues = ['GPX App', 'Heart Rate', 'Timer App', 'Watch', 'Settings'];
+const menueIndexMax = menueValues.length - 1;
+
 var myBTN1;
 var myBTN2;
 var myBTN3;
+function initBTN() {
+  console.log("initBTN");
+  clearWatch();
+  myBTN1 = setWatch(function (e) { handleBTN('1', e); }, BTN1, { repeat: true, edge: "falling" });
+  myBTN2 = setWatch(function (e) { handleBTN('2', e); }, BTN2, { repeat: true, edge: "falling" });
+  myBTN3 = setWatch(function (e) { handleBTN('3', e); }, BTN3, { repeat: true, edge: "falling" });
+}
+function handleBTN(BTN, e) {
+  console.log("handleBTN" + BTN + progIndex);
+  switch (BTN.toString() + progIndex.toString()) {
+    case '10': { startMyGPSApp(); break; } //GPX App
+    case '11': { break; } //Heart App
+    case '12': { startTimer(); break; } //Timer App
+    case '13': { break; } //Watch
+    case '14': { menueUp(); break; } //Settings
 
-function clearDevice() {
+    case '20': { startAppMenue(); break; } //GPX App
+    case '21': { startAppMenue(); break; } //Heart App
+    case '22': { startAppMenue(); break; } //Timer App
+    case '23': { startAppMenue(); break; } //Watch
+    case '24': { startMenueItem(); break; } //Settings
+
+    case '30': { stopMyGPSApp(); break; } //GPX App
+    case '31': { break; } //Heart App
+    case '32': { stopTimer(); break; } //Timer App
+    case '33': { break; } //Watch
+    case '34': { menueDown(); break; } //Settings
+    default: { break; }
+  }
+}
+function startApp() {
   g.clear();
   Bangle.loadWidgets();
   Bangle.drawWidgets();
+  console.log("startApp (" + progIndex + ")");
+  initBTN();
+  switch (progIndex) {
+    case 0: { startMyGPSApp(); break; } //GPX App
+    case 1: { startMyHeartApp(); break; } //Heart App
+    case 2: { startMyTimerApp(); break; } //Timer App
+    case 3: { drawWordClock(); break; } //Watch
+    case 4: { startAppMenue(); break; } //Settings
+  }
 }
-function clearApp() {
+
+var menueMode = false;
+var gpsSearchIndex = 0;
+
+// Helper Function
+function fileWrite(file, line) {
+  f = require("Storage").open(file, "a"); // filename max 7 Zeichen
+  free = require("Storage").getFree();
+  if (free > 30000) {
+    f.write(line + "\n");
+    return "yes";
+  }
+  else { return "no"; }
+}
+function newScreen(title) {
+  console.log("newScreen(" + title + ")");
   g.clearRect(3, 29, 237, 215); // Outer Rect
-  clearWatch(myBTN2);
-  myBTN2 = setWatch(function (e) { startAppMenue(); }, BTN2, { repeat: false, edge: "rising" });
+  g.setColor(whiteColor);
+  g.setFont("6x8", fontSize);
+  g.setFontAlign(-1, -1);
+  g.drawString(title, 15, 30);
 }
 
-/* Heart Rate */
-function startMyHeartApp() {
-  clearApp();
-  E.showMessage("Heart App");
-}
-/* end of Heart Rate */
-
-/* GPS */
-function GPSstopped(title) {
-  console.log("GPSstopped");
-  Bangle.setGPSPower(0);
-  E.showMessage(title);
+// GPS
+var gpsSearchIndex = 0;
+function startMyGPSApp() {
+  progIndex = 0;
+  newScreen("GPS started..");
+  gpsSearchIndex = 0;
+  Bangle.setLCDTimeout(60);
+  Bangle.setGPSPower(1);
+  Bangle.on('GPS', onGPS);
 }
 function onGPS(fix) {
-  console.log("onGPS");
   console.log(fix);
-  if (isNaN(fix.lat)) GPSstopped('No GPS Signal');
+  if (isNaN(fix.lat)) {
+    searchIndex = gpsSearchIndex + 1;
+    newScreen("Searching " + gpsSearchIndex);
+  }
+  else {
+    newScreen("Recording");
+    line = fix.lat + "," + fix.lon + "," + fix.alt + "," + fix.speed + "," + fix.course + "," + fix.satellites + "," + fix.time;
+    g.drawString("Lat: " + fix.lat, 15, 60);
+    g.drawString("Lon: " + fix.lon, 15, 90);
+    g.drawString("Alt: " + fix.alt, 15, 120);
+    g.drawString("Speed: " + fix.speed, 15, 150);
+    g.drawString("Course: " + fix.course, 15, 180);
+    fileWrite("GPS", line);
+  }
+  drawDigitalTime();
 }
-function startMyGPXApp() {
-  clearApp();
-  Bangle.on('GPS', onGPS);
-  Bangle.setGPSPower(1);
-  E.showMessage("GPS Mode"); // avoid showing rubbish on screen
+function stopMyGPSApp() {
+  Bangle.setGPSPower(0);
+  newScreen("GPS stopped..");
 }
-/* End of GPS */
 
-/* Timer Section */
+// Heart Rate
+function startMyHeartApp() {
+  console.log("Heart App");
+  progIndex = 1;
+  newScreen("Heart App");
+  g.drawString('TBD', 60, 60);
+}
+
+// Timer
 var counterInterval;
 var timerCounter = 5;
 var timerRunning = false;
@@ -70,17 +144,14 @@ function countDown() {
   }
 }
 function startTimer(e) {
-  // console.log(e.time - e.lastTime); // e enth�lt die Dauer des Drucks auf den Knopf
-
+  newScreen();
   // 240 x 240 x 16 bits
   // 48 Pixel for Widgets
   // 192 Pixel for the Rest
   // 96 Pixel seems to be the center
-  g.clear();
   g.drawRect(3, 29, 237, 215); // Outer Rect
   g.drawCircle(117, 122, 93);  // Inner Circle
   g.drawRect(52, 57, 182, 187); // Inner Rect
-
   counter = timerCounter;
   timerRunning = true;
   countDown();
@@ -94,23 +165,9 @@ function stopTimer() {
   }
 }
 function startMyTimerApp() {
-  g.clearRect(3, 29, 237, 215); // Outer Rect
-  clearWatch(myBTN1);
-  clearWatch(myBTN2);
-  clearWatch(myBTN3);
-  myBTN2 = setWatch(function (e) { stopMyTimerApp(); }, BTN2, { repeat: true, edge: "falling" });
-  myBTN1 = setWatch(function (e) { startTimer(e); }, BTN1, { repeat: true, edge: "falling" });
-  myBTN3 = setWatch(function (e) { stopTimer(e); }, BTN3, { repeat: true, edge: "falling" });
-  E.showMessage("Start Timer");
+  progIndex = 2;
+  newScreen("Timer App");
 }
-function stopMyTimerApp() {
-  console.log(stopMyTimerApp);
-  stopTimer();
-  clearWatch(myBTN1);
-  clearWatch(myBTN3);
-  startAppMenue();
-}
-/* End of Timer Section */
 
 /* Draw World Clock */
 const allWords = [
@@ -148,7 +205,7 @@ const mins = {
   6: ["PAST", 13, 23, 33, 43],
   7: ["TO", 43, 53]
 };
-// offsets and incerments
+// offsets and increments
 const xs = 35;
 const ys = 31;
 const dy = 22;
@@ -158,9 +215,10 @@ const fontSize = 3;  // "6x8"
 const passivColor = 0x3186 /*grey*/;
 const activeColor = 0xF800 /*red*/;
 const whiteColor = 0xFFFF /*Wite*/;
+
 function drawWordClock() {
-  clearDevice();
-  myBTN2 = setWatch(startAppMenue, BTN2, { repeat: false, edge: "falling" });
+  newScreen("");
+  progIndex = 3;
   // get time
   var t = new Date();
   var h = t.getHours();
@@ -191,7 +249,7 @@ function drawWordClock() {
   // calc indexes
   midx = Math.round(m / 5);
   hidx = h % 12;
-  if (hidx === 0) { hidx = 12; }
+  if (hidx == 0) { hidx = 12; }
   if (midx > 6) {
     if (midx == 12) { midx = 0; }
     hidx++;
@@ -206,6 +264,8 @@ function drawWordClock() {
 
   // write hour in active color
   g.setColor(activeColor);
+  // console.log("Hours:'"+hours[hidx]+"'");
+
   hours[hidx][0].split('').forEach((c, pos) => {
     x = xs + (hours[hidx][pos + 1] / 10 | 0) * dx;
     y = ys + (hours[hidx][pos + 1] % 10) * dy;
@@ -226,33 +286,23 @@ function drawWordClock() {
   g.setColor(whiteColor);
   g.clearRect(0, 215, 240, 240);
   g.drawString(time, 120, 215);
-} // draw the Word Clock
-/* End of Draw World Clock */
+}
+function drawDigitalTime() {
+  var t = new Date();
+  var h = t.getHours();
+  var m = t.getMinutes();
+  var time = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2);
+  g.setColor(whiteColor);
+  g.clearRect(0, 215, 240, 240);
+  g.drawString(time, 120, 215);
+}
 
-/* Main Section */
-var menueIndex = 0;
-var menueValues = ['GPX App', 'Heart Rate', 'Timer App', 'Watch', 'Stop App'];
-const menueIndexMax = menueValues.length - 1;
+// Mein Menue
 function startMenueItem() {
   console.log("Start Menue Item (" + menueIndex + ")");
-  switch (menueIndex) {
-    case 0:
-      startMyGPXApp();
-      break;
-    case 1:
-      startMyHeartApp();
-      break;
-    case 2:
-      startMyTimerApp();
-      break;
-    case 3:
-      drawWordClock();
-      break;
-    case 4:
-      Bangle.showLauncher();
-      break;
-    default:
-  }
+  progIndex = menueIndex;
+  if (menueIndex == 4) Bangle.showLauncher();
+  else startApp();
 }
 function menueUp() {
   console.log("menueUp");
@@ -285,22 +335,17 @@ function drawMenueItem(index) {
   g.drawString(menueValues[index], x, y);
 }
 function startAppMenue() {
-  g.clearRect(3, 29, 237, 215); // Outer Rect
-  clearWatch(myBTN2);
-  myBTN1 = setWatch(function (e) { menueUp(); }, BTN1, { repeat: false, edge: "falling" });
-  myBTN3 = setWatch(function (e) { menueDown(); }, BTN3, { repeat: false, edge: "falling" });
-  myBTN2 = setWatch(startMenueItem, BTN2, { repeat: false, edge: "falling" });
+  newScreen("");
+  progIndex = 4;
   for (i = 0; i <= menueIndexMax; i++) {
     drawMenueItem(i);
   }
 }
-/* End of Menue Section */
 
 /* Main Section */
 Bangle.on('lcdPower', (on) => {
   if (on) {
-    drawWordClock();
+    startApp();
   }
 });
-drawWordClock();
-/* End of Main Section */
+startApp();
