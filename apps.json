@@ -174,9 +174,10 @@
     "name": "TestingApp",
     "shortName": "TestApp",
     "icon": "mrjau01.app.png",
-    "version": "0.09",
+    "version": "0.10",
     "description": "My first test app",
-    "tags": "Watch,GPS",
+    "tags": "clock",
+    "type": "clock",
     "allow_emulator": true,
     "storage": [
       {
