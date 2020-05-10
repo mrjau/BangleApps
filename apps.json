@@ -2720,7 +2720,7 @@
     "allow_emulator": true,
     "storage": [
       {
-        "name": "acclock.app.js",
+        "name": "acwclock.app.js",
         "url": "acwclock.js"
       },
       {
