@@ -1,0 +1,22 @@
+{
+  "id": "aftest",
+  "name": "TestingApp",
+  "shortName": "TestApp",
+  "icon": "aftest.app.png",
+  "version": "0.01",
+  "description": "A first test app",
+  "tags": "",
+  "type": "",
+  "allow_emulator": true,
+ "readme": "README.md",  "storage": [
+    {
+      "name": "aftest.js",
+      "url": "aftest.app.js"
+    },
+    {
+      "name": "aftest.img",
+      "url": "aftest-icon.js",
+      "evaluate": true
+    }
+  ]
+}

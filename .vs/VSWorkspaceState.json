@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\apps",
-    "\\apps\\mrjau01",
+    "\\apps\\acwclock",
+    "\\apps\\aftest",
     "\\apps\\wclock"
   ],
+  "SelectedNode": "\\apps\\acwclock\\acwclock-icon.js",
   "PreviewInSolutionExplorer": false
 }
