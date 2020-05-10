@@ -2,7 +2,7 @@
   "id": "aftest",
   "name": "TestingApp",
   "shortName": "TestApp",
-  "icon": "aftest.app.png",
+  "icon": "aftest.png",
   "version": "0.01",
   "description": "A first test app",
   "tags": "",
