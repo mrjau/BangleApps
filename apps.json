@@ -2731,6 +2731,25 @@
     ]
   },
   {
+    "id": "acgpstime",
+    "name": "cloned GPS Time",
+    "icon": "acgpstime.png",
+    "version": "0.04",
+    "description": "GPS Time Clone; Update the Bangle.js's clock based on the time from the GPS receiver. Press BTN2 to set the Date/Time, than disable GPS and close the tool",
+    "tags": "tool,gps",
+    "storage": [
+      {
+        "name": "acgpstime.app.js",
+        "url": "acgpstime.js"
+      },
+      {
+        "name": "acgpstime.img",
+        "url": "acgpstime-icon.js",
+        "evaluate": true
+      }
+    ]
+  },
+  {
     "id": "aftest",
     "name": "TestingApp",
     "shortName": "TestApp",

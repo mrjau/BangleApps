@@ -3,9 +3,9 @@
     "",
     "\\apps",
     "\\apps\\acwclock",
-    "\\apps\\aftest",
+    "\\apps\\gpstime",
     "\\apps\\wclock"
   ],
-  "SelectedNode": "\\apps\\acwclock\\acwclock-icon.js",
+  "SelectedNode": "\\apps\\acwclock\\add-to-apps.json",
   "PreviewInSolutionExplorer": false
 }

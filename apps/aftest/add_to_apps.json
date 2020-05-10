@@ -10,8 +10,8 @@
   "allow_emulator": true,
  "readme": "README.md",  "storage": [
     {
-      "name": "aftest.js",
-      "url": "aftest.app.js"
+      "name": "aftest.app.js",
+      "url": "aftest.js"
     },
     {
       "name": "aftest.img",
