@@ -48,7 +48,7 @@ function startApp() {
     case 0: { startMyGPSApp(); break; } //GPX App
     case 1: { startMyHeartApp(); break; } //Heart App
     case 2: { startMyTimerApp(); break; } //Timer App
-    case 3: { drawWordClock(); break; } //Watch
+    case 3: { drawWordClockBETA(); break; } //Watch
     case 4: { startAppMenue(); break; } //Settings
   }
 }
@@ -216,7 +216,7 @@ const passivColor = 0x3186 /*grey*/;
 const activeColor = 0xF800 /*red*/;
 const whiteColor = 0xFFFF /*Wite*/;
 
-function drawWordClock() {
+function drawWordClockBETA() {
   newScreen("");
   progIndex = 3;
   // get time
@@ -349,3 +349,4 @@ Bangle.on('lcdPower', (on) => {
   }
 });
 startApp();
+setInterval(drawWordClockBETA, 1E4);
