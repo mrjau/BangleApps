@@ -10,6 +10,10 @@ Some Links
 * https://www.espruino.com/Image+Converter (ImageConverter)
 * https://github.com/espruino/BangleApps (Original Code Repository of BangleJS Apps)
 
+* Cloned Word Clock
+** Digital Time - displayed in white to see in sun.
+** GPS Set Time - BT2 stop GPS and jump back to settings.
+
 Bangle.js App Loader (and Apps)
 ================================
 
