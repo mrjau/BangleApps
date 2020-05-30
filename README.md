@@ -1,18 +1,18 @@
+
 Some Links
 ==========
-https://banglejs.com/ (Get Started)
-https://banglejs.com/reference (Software Referenz)
+* https://banglejs.com/ (Get Started)
+* https://banglejs.com/reference (Software Referenz)
+* https://banglejs.com/apps/#tool (Tools)
+* https://www.espruino.com/Bangle.js#tutorials (Tutorial)
+* https://www.espruino.com/ide/ (Chrome espruino IDE)
+* https://www.espruino.com/ide/emulator.html (Chrome espruino IDE Emulator)
+* https://www.espruino.com/Image+Converter (ImageConverter)
+* https://github.com/espruino/BangleApps (Original Code Repository of BangleJS Apps)
 
-https://www.espruino.com/Image+Converter (ImageConverter)
-https://banglejs.com/apps/#tool (Tools)
-
-https://www.espruino.com/ide/ (Chrome espruino IDE)
-https://www.espruino.com/Bangle.js#tutorials (Tutorial)
-
-https://www.espruino.com/ide/emulator.html (emulator)
-https://github.com/espruino/BangleApps (Code Repository of BangleJS Apps)
-
-
+* Cloned Word Clock
+** Digital Time - displayed in white to see in sun.
+** GPS Set Time - BT2 stop GPS and jump back to settings.
 
 Bangle.js App Loader (and Apps)
 ================================
