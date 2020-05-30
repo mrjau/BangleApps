@@ -2771,5 +2771,29 @@
         "evaluate": true
       }
     ]
+  },
+  {
+    "id": "actimer",
+    "name": "cloned Timer",
+    "icon": "actimer.png",
+    "version": "0.01",
+    "description": "Timer App",
+    "tags": "tool",
+    "storage": [
+      {
+        "name": "actimer.app.js",
+        "url": "actimer.js"
+      },
+      {
+        "name": "actimer.img",
+        "url": "actimer-icon.js",
+        "evaluate": true
+      },
+      {
+        "name": "actimer.json",
+        "url": "actimer-setting.js",
+        "evaluate": true
+      }
+    ]
   }
 ]

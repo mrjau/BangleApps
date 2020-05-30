@@ -2,10 +2,7 @@
   "ExpandedNodes": [
     "",
     "\\apps",
-    "\\apps\\acwclock",
-    "\\apps\\gpstime",
-    "\\apps\\wclock"
+    "\\apps\\setting"
   ],
-  "SelectedNode": "\\apps\\acwclock\\add-to-apps.json",
   "PreviewInSolutionExplorer": false
 }

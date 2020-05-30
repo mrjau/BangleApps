@@ -1,0 +1,2 @@
+0.03: Fix time output on new firmwares when no GPS time set (fix #104)
+0.04: App will be removed, when GPS Time is set. GPS will be disabled also.
