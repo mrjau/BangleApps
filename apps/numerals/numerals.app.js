@@ -8,7 +8,7 @@
 
 var numerals = {
   0:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,9],[30,25,61,25,69,33,69,67,61,75,30,75,22,67,22,33]],
-  1:[[59,1,82,1,90,9,90,92,82,100,73,100,65,92,65,27,59,27,51,19,51,9]],
+  1:[[50,1,82,1,90,9,90,92,82,100,73,100,65,92,65,27,50,27,42,19,42,9]],      
   2:[[9,1,82,1,90,9,90,53,82,61,21,61,21,74,82,74,90,82,90,92,82,100,9,100,1,92,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],
   3:[[9,1,82,1,90,9,90,92,82,100,9,100,1,92,1,82,9,74,70,74,70,61,9,61,1,53,1,48,9,40,70,40,70,27,9,27,1,19,1,9]],
   4:[[9,1,14,1,22,9,22,36,69,36,69,9,77,1,82,1,90,9,90,92,82,100,78,100,70,92,70,61,9,61,1,53,1,9]],
@@ -51,8 +51,8 @@ function drawNum(num,col,x,y,func){
   let tx = x*100+25;
   let ty = y*104+32;
   for (let i=0;i<numerals[num].length;i++){
-	  if (i>0) g.setColor((func==fill)?"#000000":col);
-	  func(translate(tx,ty,numerals[num][i]));
+    if (i>0) g.setColor((func==fill)?"#000000":col);
+    func(translate(tx,ty,numerals[num][i]));
   }
 }
 
@@ -70,12 +70,8 @@ function draw(drawMode){
 }
 
 Bangle.setLCDMode();
-
-clearWatch();
+g.reset().clear();
 setWatch(Bangle.showLauncher, settings.menuButton, {repeat:false,edge:"falling"});
-
-g.clear();
-clearInterval();
 if (settings.color>0) _rCol=settings.color-1;
 interval=setInterval(draw, REFRESH_RATE, settings.drawMode);
 draw(settings.drawMode);
@@ -83,7 +79,7 @@ draw(settings.drawMode);
 Bangle.on('lcdPower', function(on){
   if (on){
     if (settings.color==0) _rCol = Math.floor(Math.random()*_hCol.length);
-	draw(settings.drawMode);
+    draw(settings.drawMode);
     interval=setInterval(draw, REFRESH_RATE, settings.drawMode);
   }else
   {

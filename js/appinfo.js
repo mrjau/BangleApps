@@ -1,15 +1,27 @@
+if (typeof btoa==="undefined") {
+  // Don't define btoa as a function here because Apple's
+  // iOS browser defines the function even though it's in
+  // an IF statement that is never executed
+  btoa = function(d) { return Buffer.from(d,'binary').toString('base64'); }
+}
+
 // Converts a string into most efficient way to send to Espruino (either json, base64, or compressed base64)
 function toJS(txt) {
-  var json = JSON.stringify(txt);
-  var b64 = "atob("+JSON.stringify(btoa(json))+")";
-  var js = b64.length < json.length ? b64 : json;
+  let isBinary = false;
+  for (let i=0;i<txt.length;i++) {
+    let ch = txt.charCodeAt(i);
+    if (ch==0 || ch>127) isBinary=true;
+  }
+  let json = JSON.stringify(txt);
+  let b64 = "atob("+JSON.stringify(btoa(txt))+")";
+  let js = (isBinary || (b64.length < json.length)) ? b64 : json;
 
-  if (heatshrink) {
-    var ua = new Uint8Array(txt.length);
-    for (var i=0;i<txt.length;i++)  ua[i] = txt.charCodeAt(i);
-    var c = heatshrink.compress(ua);
-    var cs = "";
-    for (var i=0;i<c.length;i++)
+  if (typeof heatshrink !== "undefined") {
+    let ua = new Uint8Array(txt.length);
+    for (let i=0;i<txt.length;i++)  ua[i] = txt.charCodeAt(i);
+    let c = heatshrink.compress(ua);
+    let cs = "";
+    for (let i=0;i<c.length;i++)
       cs += String.fromCharCode(c[i]);
     cs = 'require("heatshrink").decompress(atob("'+btoa(cs)+'"))';
     // if it's more than a little smaller, use compressed version
@@ -21,9 +33,9 @@ function toJS(txt) {
 }
 
 if ("undefined"!=typeof module)
-  Espruino = require("./espruinotools.js");
+  Espruino = require("../lib/espruinotools.js");
 
-var AppInfo = {
+const AppInfo = {
   /* Get files needed for app.
      options = {
         fileGetter : callback for getting URL,
@@ -43,7 +55,7 @@ var AppInfo = {
                 SET_TIME_ON_WRITE : false,
                 PRETOKENISE : options.settings.pretokenise,
                 //MINIFICATION_LEVEL : "ESPRIMA", // disable due to https://github.com/espruino/BangleApps/pull/355#issuecomment-620124162
-                builtinModules : "Flash,Storage,heatshrink,tensorflow,locale"
+                builtinModules : "Flash,Storage,heatshrink,tensorflow,locale,notify"
               });
             } else
               return content;
@@ -52,7 +64,7 @@ var AppInfo = {
               name : storageFile.name,
               content : content,
               evaluate : storageFile.evaluate
-          }});
+            }});
         else return Promise.resolve();
       })).then(fileContents => { // now we just have a list of files + contents...
         // filter out empty files
@@ -72,10 +84,10 @@ var AppInfo = {
           } else {
             let code = storageFile.content;
             // write code in chunks, in case it is too big to fit in RAM (fix #157)
-            var CHUNKSIZE = 4096;
+            let CHUNKSIZE = 4096;
             storageFile.cmd = `\x10require('Storage').write(${JSON.stringify(storageFile.name)},${toJS(code.substr(0,CHUNKSIZE))},0,${code.length});`;
-            for (var i=CHUNKSIZE;i<code.length;i+=CHUNKSIZE)
-               storageFile.cmd += `\n\x10require('Storage').write(${JSON.stringify(storageFile.name)},${toJS(code.substr(i,CHUNKSIZE))},${i});`;
+            for (let i=CHUNKSIZE;i<code.length;i+=CHUNKSIZE)
+              storageFile.cmd += `\n\x10require('Storage').write(${JSON.stringify(storageFile.name)},${toJS(code.substr(i,CHUNKSIZE))},${i});`;
           }
         });
         resolve(fileContents);
@@ -84,12 +96,12 @@ var AppInfo = {
   },
   createAppJSON : (app, fileContents) => {
     return new Promise((resolve,reject) => {
-      var appJSONName = app.id+".info";
+      let appJSONName = app.id+".info";
       // Check we don't already have a JSON file!
-      var appJSONFile = fileContents.find(f=>f.name==appJSONName);
+      let appJSONFile = fileContents.find(f=>f.name==appJSONName);
       if (appJSONFile) reject("App JSON file explicitly specified!");
       // Now actually create the app JSON
-      var json = {
+      let json = {
         id : app.id
       };
       if (app.shortName) json.name = app.shortName;
@@ -101,7 +113,7 @@ var AppInfo = {
         json.icon = app.id+".img";
       if (app.sortorder) json.sortorder = app.sortorder;
       if (app.version) json.version = app.version;
-      var fileList = fileContents.map(storageFile=>storageFile.name);
+      let fileList = fileContents.map(storageFile=>storageFile.name);
       fileList.unshift(appJSONName); // do we want this? makes life easier!
       json.files = fileList.join(",");
       if ('data' in app) {
