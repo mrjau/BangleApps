@@ -1,0 +1,89 @@
+[
+  {
+    "id": "acwclock",
+    "name": "cloned Word Clock",
+    "icon": "acwclock.png",
+    "version": "0.04",
+    "description": "Word Clock Clone, Time in white color",
+    "tags": "clock",
+    "type": "clock",
+    "allow_emulator": true,
+    "storage": [
+      {
+        "name": "acwclock.app.js",
+        "url": "acwclock.js"
+      },
+      {
+        "name": "acwclock.img",
+        "url": "acwclock-icon.js",
+        "evaluate": true
+      }
+    ]
+  },
+  {
+    "id": "acgpstime",
+    "name": "cloned GPS Time",
+    "icon": "acgpstime.png",
+    "version": "0.04",
+    "description": "GPS Time Clone; Update the Bangle.js's clock based on the time from the GPS receiver. Press BTN2 to set the Date/Time, than disable GPS and close the tool",
+    "tags": "tool,gps",
+    "storage": [
+      {
+        "name": "acgpstime.app.js",
+        "url": "acgpstime.js"
+      },
+      {
+        "name": "acgpstime.img",
+        "url": "acgpstime-icon.js",
+        "evaluate": true
+      }
+    ]
+  },
+  {
+    "id": "aftest",
+    "name": "TestingApp",
+    "shortName": "TestApp",
+    "icon": "aftest.png",
+    "version": "0.01",
+    "description": "A first test app",
+    "tags": "",
+    "type": "",
+    "allow_emulator": true,
+    "readme": "README.md",
+    "storage": [
+      {
+        "name": "aftest.js",
+        "url": "aftest.app.js"
+      },
+      {
+        "name": "aftest.img",
+        "url": "aftest-icon.js",
+        "evaluate": true
+      }
+    ]
+  },
+  {
+    "id": "actimer",
+    "name": "cloned Timer",
+    "icon": "actimer.png",
+    "version": "0.01",
+    "description": "Timer App",
+    "tags": "tool",
+    "storage": [
+      {
+        "name": "actimer.app.js",
+        "url": "actimer.js"
+      },
+      {
+        "name": "actimer.img",
+        "url": "actimer-icon.js",
+        "evaluate": true
+      },
+      {
+        "name": "actimer.json",
+        "url": "actimer-setting.js",
+        "evaluate": true
+      }
+    ]
+  }
+]
