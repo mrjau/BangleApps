@@ -46,6 +46,7 @@ const dx = 25;
 const fontSize = 3;  // "6x8"
 const passivColor = 0x3186 /*grey*/ ;
 const activeColor = 0xF800 /*red*/ ;
+const digitalColor = 0xFFFF /*red*/;
 
 function drawWordClock() {
 
@@ -111,7 +112,7 @@ function drawWordClock() {
   });
 
   // display digital time
-  g.setColor(activeColor);
+  g.setColor(digitalColor);
   g.clearRect(0, 215, 240, 240);
   g.drawString(time, 120, 215);
 }
